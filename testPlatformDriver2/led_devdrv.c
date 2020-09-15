@@ -25,6 +25,7 @@
 #define DevDrvName "mypiled"
 //////////////////////////////////////////////////////////
 //platform driver 部分
+static struct class *cls;
 static  int led_remove(struct platform_device *led_dev);
 static  int led_probe(struct platform_device *led_dev);
 static  int dev_major = 0;
@@ -38,7 +39,7 @@ struct platform_driver led_drv =
        .driver            = {
               .name     = DevDrvName,           //与设备名称一样
        }
-}
+};
 
 static int led_open(struct inode *inode, struct file  *file)
  {
@@ -58,7 +59,7 @@ static struct  file_operations led_fops=
     .owner  =   THIS_MODULE,     //被使用时阻止模块被卸载
     .open   =   led_open,     
     .write   =  led_write,   
-}
+};
 
 static int led_probe(struct platform_device *pdev)
 {

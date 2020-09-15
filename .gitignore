@@ -2,3 +2,9 @@
 *.o
 *.temp
 *.out
+*.mod*
+*.sys*
+*.order
+*.sym*
+*.ko*
+*.cmd
