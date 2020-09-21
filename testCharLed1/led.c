@@ -10,7 +10,8 @@
 #include <linux/delay.h>
 #include <linux/uaccess.h>
 #include <linux/init.h>
-
+#include <linux/mm.h> 
+#include <asm/io.h>
 
 #define DEVICE_NAME "pi_Led"
 #define DRIVER_NAME "pi_Led"
