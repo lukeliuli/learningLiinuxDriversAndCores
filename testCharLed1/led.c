@@ -20,7 +20,7 @@ static dev_t pi_led_devno; //设备号
 static struct class *pi_led_class;
 static struct cdev pi_led_class_dev;
 
-<<<<<<< HEAD
+
 //////////////////////////////////////////////////////
 //GPIO related
 #define BCM2835_GPSET0 0x001c
@@ -70,11 +70,9 @@ int bcm2835_gpio_clr(uint8_t pin)
 
     return 0;
 }
-////////////////////////////////////////////////
-=======
-struct gpio_chip *gpiochip;
 
->>>>>>> origin/master
+
+
 #define PIN 26 //GPIO26
 
 //这部分函数为内核调用后open的设备IO操作,和裸板程序一样
@@ -117,15 +115,10 @@ static long pi_led_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
 
 static int pi_led_release(struct inode *inode, struct file *file)
 {
-<<<<<<< HEAD
+
    if (open_flag == 1)
    {
       open_flag= 0;
-=======
-   if (open_state == 1)
-   {
-      open_state = 0;
->>>>>>> origin/master
       printk("close file success!\n");
       return 0;
    }
