@@ -10,7 +10,7 @@
 #include <linux/delay.h>
 #include <linux/uaccess.h>
 #include <linux/init.h>
-#include "mygpio.h"
+
 
 #define DEVICE_NAME "pi_Led"
 #define DRIVER_NAME "pi_Led"
