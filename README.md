@@ -4,3 +4,4 @@
 3. testHello1：最简单的驱动
 4. testPlatformDriver1：最简单的platform驱动
 5. testMiscDriver1:最简单的混杂驱动
+6. testI2C_simple8653:最简单的I2C驱动
