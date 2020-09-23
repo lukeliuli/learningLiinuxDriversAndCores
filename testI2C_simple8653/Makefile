@@ -1,7 +1,10 @@
-obj-m += mma8653_drv.o
-#obj-m += mma8653fc.o
+
+obj-m :=mma8653_drv.o
+KDIR := /home/pi/codes/kernel/linux
+PWD := $(shell pwd)
 all:
-	make -C  /opt/x6818_linux/kernel SUBDIRS=$(PWD) modules
+	make -C $(KDIR) M=$(PWD) modules
 clean:
-	make -C  /opt/x6818_linux/kernel SUBDIRS=$(PWD) clean 
+	make -C $(KDIR) M=$(PWD) clean
+
 
