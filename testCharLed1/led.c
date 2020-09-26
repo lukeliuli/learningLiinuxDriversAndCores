@@ -10,7 +10,7 @@
 #include <linux/delay.h>
 #include <linux/uaccess.h>
 #include <linux/init.h>
-#include <linux/mm.h> 
+#include <linux/mm.h>
 #include <asm/io.h>
 
 #define DEVICE_NAME "pi_Led"
@@ -20,7 +20,6 @@
 static dev_t pi_led_devno; //设备号
 static struct class *pi_led_class;
 static struct cdev pi_led_class_dev;
-
 
 //////////////////////////////////////////////////////
 //GPIO related
@@ -32,49 +31,47 @@ static struct cdev pi_led_class_dev;
 
 int bcm2835_gpio_fsel(uint8_t pin, uint8_t mode)
 {
-    //初始化GPIOB功能选择寄存器的物理地址
-    volatile uint32_t *bcm2835_gpio = (volatile uint32_t *)ioremap(BCM2835_GPIO_BASE, 16);
-    volatile uint32_t *bcm2835_gpio_fsel = bcm2835_gpio + BCM2835_GPFSEL0 / 4 + (pin / 10);
-    uint8_t shift = (pin % 10) * 3;
-    uint32_t value = mode << shift;
-    *bcm2835_gpio_fsel = *bcm2835_gpio_fsel | value;
+   //初始化GPIOB功能选择寄存器的物理地址
+   volatile uint32_t *bcm2835_gpio = (volatile uint32_t *)ioremap(BCM2835_GPIO_BASE, 16);
+   volatile uint32_t *bcm2835_gpio_fsel = bcm2835_gpio + BCM2835_GPFSEL0 / 4 + (pin / 10);
+   uint8_t shift = (pin % 10) * 3;
+   uint32_t value = mode << shift;
+   *bcm2835_gpio_fsel = *bcm2835_gpio_fsel | value;
 
-    printk("fsel address: 0x%lx : %x\n", (long unsigned int)bcm2835_gpio_fsel, *bcm2835_gpio_fsel);
+   printk("fsel address: 0x%lx : %x\n", (long unsigned int)bcm2835_gpio_fsel, *bcm2835_gpio_fsel);
 
-    return 0;
+   return 0;
 }
 
 int bcm2835_gpio_set(uint8_t pin)
 {
-    //GPIO输出功能物理地址
-    volatile uint32_t *bcm2835_gpio = (volatile uint32_t *)ioremap(BCM2835_GPIO_BASE, 16);
-    volatile uint32_t *bcm2835_gpio_set = bcm2835_gpio + BCM2835_GPSET0 / 4 + pin / 32;
-    uint8_t shift = pin % 32;
-    uint32_t value = 1 << shift;
-    *bcm2835_gpio_set = *bcm2835_gpio_set | value;
+   //GPIO输出功能物理地址
+   volatile uint32_t *bcm2835_gpio = (volatile uint32_t *)ioremap(BCM2835_GPIO_BASE, 16);
+   volatile uint32_t *bcm2835_gpio_set = bcm2835_gpio + BCM2835_GPSET0 / 4 + pin / 32;
+   uint8_t shift = pin % 32;
+   uint32_t value = 1 << shift;
+   *bcm2835_gpio_set = *bcm2835_gpio_set | value;
 
-    printk("set address:  0x%lx : %x\n", (long unsigned int)bcm2835_gpio_set, *bcm2835_gpio_set);
+   printk("set address:  0x%lx : %x\n", (long unsigned int)bcm2835_gpio_set, *bcm2835_gpio_set);
 
-    return 0;
+   return 0;
 }
 
 int bcm2835_gpio_clr(uint8_t pin)
 {
-    //GPIO清除功能物理地址
-    volatile uint32_t *bcm2835_gpio = (volatile uint32_t *)ioremap(BCM2835_GPIO_BASE, 16);
-    volatile uint32_t *bcm2835_gpio_clr = bcm2835_gpio + BCM2835_GPCLR0 / 4 + pin / 32;
-    uint8_t shift = pin % 32;
-    uint32_t value = 1 << shift;
-    *bcm2835_gpio_clr = *bcm2835_gpio_clr | value;
+   //GPIO清除功能物理地址
+   volatile uint32_t *bcm2835_gpio = (volatile uint32_t *)ioremap(BCM2835_GPIO_BASE, 16);
+   volatile uint32_t *bcm2835_gpio_clr = bcm2835_gpio + BCM2835_GPCLR0 / 4 + pin / 32;
+   uint8_t shift = pin % 32;
+   uint32_t value = 1 << shift;
+   *bcm2835_gpio_clr = *bcm2835_gpio_clr | value;
 
-    printk("clr address:  0x%lx : %x\n", (long unsigned int)bcm2835_gpio_clr, *bcm2835_gpio_clr);
+   printk("clr address:  0x%lx : %x\n", (long unsigned int)bcm2835_gpio_clr, *bcm2835_gpio_clr);
 
-    return 0;
+   return 0;
 }
 
-
-
-#define PIN 26 //GPIO26
+#define PIN 10 //GPIO26
 
 //这部分函数为内核调用后open的设备IO操作,和裸板程序一样
 int open_flag = 0;
@@ -119,7 +116,7 @@ static int pi_led_release(struct inode *inode, struct file *file)
 
    if (open_flag == 1)
    {
-      open_flag= 0;
+      open_flag = 0;
       printk("close file success!\n");
       return 0;
    }
