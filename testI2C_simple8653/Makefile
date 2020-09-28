@@ -1,5 +1,5 @@
 
-obj-m :=mma8653_drv.o
+obj-m := drv.o dev.o
 KDIR := /home/pi/codes/kernel/linux
 PWD := $(shell pwd)
 all:
