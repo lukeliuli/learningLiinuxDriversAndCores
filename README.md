@@ -5,3 +5,4 @@
 4. testPlatformDriver1：最简单的platform驱动
 5. testMiscDriver1:最简单的混杂驱动
 6. testI2C_simple8653:最简单的I2C驱动
+7. testUSBdrivers1:最简单的USB驱动，skel驱动，usbmouse驱动
