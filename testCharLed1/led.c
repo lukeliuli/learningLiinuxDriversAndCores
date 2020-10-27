@@ -1,5 +1,10 @@
 
+#include <linux/types.h>   
 
+#include <linux/ioctl.h>  
+#include <linux/delay.h>  
+#include <linux/uaccess.h>
+#include <linux/init.h>  
 #include <linux/kernel.h>
 #include <linux/module.h>
 #include <linux/device.h>
@@ -132,7 +137,7 @@ static ssize_t pi_led_read(struct file *filp, char __user *buf, size_t size, lof
 
    //unsigned long copy_to_user(void __user *to, const void *from, unsigned long count);
    char echo[] = "led_read";
-   unsigned int count = strlen(echo);
+   unsigned int count = strlen(echo)+1;
    copy_to_user(buf, (void *)(echo), count);
    return count;
 }
@@ -145,7 +150,6 @@ static struct file_operations pi_led_dev_fops = {
     .unlocked_ioctl = pi_led_ioctl,
     .release = pi_led_release,
     .read = pi_led_read,
-};
 };
 
 //内核加载后的初始化函数.
