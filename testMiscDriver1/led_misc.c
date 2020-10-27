@@ -43,7 +43,7 @@ static ssize_t led_read(struct file *filp, char __user *buf, size_t size, loff_t
 {
 
        //unsigned long copy_to_user(void __user *to, const void *from, unsigned long count);
-       char*echo= "led_read";
+       char echo[]= "led_read";
        unsigned int count = strlen(echo)+1;
        copy_to_user(buf, (void *)(echo), count);
        return count;

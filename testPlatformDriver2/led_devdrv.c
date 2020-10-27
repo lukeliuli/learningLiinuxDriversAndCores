@@ -67,7 +67,7 @@ static int led_probe(struct platform_device *pdev)
        dev_major= register_chrdev(0, DevDrvName, &led_fops);   //赋入file_operations结构体,dynamic alloc
        cls = class_create(THIS_MODULE, DevDrvName);
        device_create(cls, NULL, MKDEV(dev_major, dev_minor), NULL, DevDrvName); /* /dev/mypiled */
-       
+       printk("led_probe\n");
        return 0;
 }
 static int led_remove(struct platform_device *pdev)
