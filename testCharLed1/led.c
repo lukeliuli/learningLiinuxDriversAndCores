@@ -127,6 +127,16 @@ static int pi_led_release(struct inode *inode, struct file *file)
    }
 }
 
+static ssize_t pi_led_read(struct file *filp, char __user *buf, size_t size, loff_t *ppos)
+{
+
+   //unsigned long copy_to_user(void __user *to, const void *from, unsigned long count);
+   char echo[] = "led_read";
+   unsigned int count = strlen(echo);
+   copy_to_user(buf, (void *)(echo), count);
+   return count;
+}
+
 //file_operations使系统的open,ioctl等函数指针指向我们所写的led_open等函数,
 //这样系统才能够调用
 static struct file_operations pi_led_dev_fops = {
@@ -134,6 +144,8 @@ static struct file_operations pi_led_dev_fops = {
     .open = pi_led_open,
     .unlocked_ioctl = pi_led_ioctl,
     .release = pi_led_release,
+    .read = pi_led_read,
+};
 };
 
 //内核加载后的初始化函数.
