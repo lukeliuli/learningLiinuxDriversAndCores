@@ -56,7 +56,7 @@ static struct file_operations led_fops =
         .owner = THIS_MODULE, //被使用时阻止模块被卸载
         .open = led_open,
         .write = led_write,
-        .write = lead_read
+        .read = lead_read,
 };
 
 static struct miscdevice misc = {
