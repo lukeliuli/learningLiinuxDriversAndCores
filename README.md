@@ -7,4 +7,6 @@
 6. testI2C_simple8653:最简单的I2C驱动
 7. testUSBdrivers1:最简单的USB驱动，skel驱动，usbmouse驱动
 
-
+注意 
+1. testRead.py是基于python的测试驱动read是否可以 
+2. 程序都是在树莓派3b+运行的。如果在虚拟机linux运行,参考testHello1里面的linuxMakefile 
