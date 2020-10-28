@@ -68,8 +68,10 @@
 #define CH341_NBREAK_BITS_REG1 0x01
 #define CH341_NBREAK_BITS_REG2 0x40
 
-//bus.c contain tty register
-//1a86,07523 ->1a88,0006
+//bus.c 有相关代码 tty register
+//修改USBID,1a86,07523 ->1a88,0006
+//直接从linux 4.4 内核中复制出来，只适合linux4.4版本的linux，ubuntu
+//要用树莓派3b+,请重新从树莓派对应的内核代码中复制ch341.c编译
 static const struct usb_device_id id_table[] = {
 	{ USB_DEVICE(0x1a88, 0x0006) },
 	
