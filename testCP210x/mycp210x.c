@@ -47,6 +47,11 @@ static int cp210x_startup(struct usb_serial *);
 static void cp210x_release(struct usb_serial *);
 static void cp210x_dtr_rts(struct usb_serial_port *p, int on);
 
+//bus.c 有相关代码 tty register
+//修改USBID,1a86,07523 ->1a88,0006
+//直接从linux 4.4 内核中复制出来，只适合linux4.4版本的linux，ubuntu
+//要用树莓派3b+,请重新从树莓派对应的内核代码中复制ch341.c编译
+
 static const struct usb_device_id id_table[] = {
 	{ USB_DEVICE(0x045B, 0x0053) }, /* Renesas RX610 RX-Stick */
 	{ USB_DEVICE(0x0471, 0x066A) }, /* AKTAKOM ACE-1001 cable */
