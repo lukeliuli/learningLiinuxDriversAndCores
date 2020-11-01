@@ -10,4 +10,5 @@ clean:
 	make -C $(KERN_DIR) M=$(shell pwd) modules clean
 	rm -rf modules.order
  
-obj-m := mycp210x.o
+#obj-m := mycp210x.o
+obj-m := usbskelcp210x.o
