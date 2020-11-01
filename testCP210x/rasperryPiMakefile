@@ -1,7 +1,7 @@
 
 
 	
-obj-m :=led.o
+obj-m := mycp210x.o
 KDIR := /home/pi/codes/kernel/linux
 PWD := $(shell pwd)
 
