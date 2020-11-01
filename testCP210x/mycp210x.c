@@ -334,7 +334,7 @@ static int cp210x_open(struct tty_struct *tty, struct usb_serial_port *port)
 	if (tty)
 		cp210x_change_speed(tty, port, NULL);
 
-	printk("csust-cekong-usbserial(cp210x)-open")
+	printk("csust-cekong-usbserial(cp210x)-open");
 
 	return usb_serial_generic_open(tty, port);
 }
@@ -764,7 +764,7 @@ static void cp210x_release(struct usb_serial *serial)
 	struct cp210x_serial_private *spriv;
 
 	spriv = usb_get_serial_data(serial);
-	printk("csust-cekong-usbserial(cp210x)-release")
+	printk("csust-cekong-usbserial(cp210x)-release");
 	kfree(spriv);
 }
 
