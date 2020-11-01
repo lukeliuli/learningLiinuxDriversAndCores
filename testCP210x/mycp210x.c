@@ -1620,7 +1620,8 @@ static int cp210x_port_probe(struct usb_serial_port *port)
 	struct cp210x_port_private *port_priv;
 	int ret;
 
-	port_priv = kzalloc(sizeof(*port_priv), GFP_KERNEL);
+    printk("csust-cekong-cp210-probe");
+    port_priv = kzalloc(sizeof(*port_priv), GFP_KERNEL);
 	if (!port_priv)
 		return -ENOMEM;
 
@@ -1633,7 +1634,7 @@ static int cp210x_port_probe(struct usb_serial_port *port)
 		kfree(port_priv);
 		return ret;
 	}
-    printk("csust-cekong-cp210-probe");
+   
     return 0;
 }
 
