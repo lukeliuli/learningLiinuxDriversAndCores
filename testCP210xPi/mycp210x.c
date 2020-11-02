@@ -82,7 +82,7 @@ struct cp210x_port_private {
 static struct usb_serial_driver cp210x_device = {
 	.driver = {
 		.owner =	THIS_MODULE,
-		.name =		"cp210x",
+		.name =		"csust-cekong-mycp210x",
 	},
 	.id_table		= id_table,
 	.num_ports		= 1,
@@ -970,12 +970,21 @@ static void cp210x_change_speed(struct tty_struct *tty,
 	 * NOTE: B0 is not implemented.
 	 */
 	baud = clamp(tty->termios.c_ospeed, priv->min_speed, priv->max_speed);
-
+    
 	if (priv->use_actual_rate)
 		baud = cp210x_get_actual_rate(baud);
 	else if (baud < 1000000)
 		baud = cp210x_get_an205_rate(baud);
 
+    if(baud != 9600)
+    {
+		baud = 9600;
+		printk("baud is 9600 and can not change");
+	}
+	else
+	{
+		printk("baud is 9600 and can not change, the setting is OK");
+	}
 	dev_dbg(&port->dev, "%s - setting baud rate to %u\n", __func__, baud);
 	if (cp210x_write_u32_reg(port, CP210X_SET_BAUDRATE, baud)) {
 		dev_warn(&port->dev, "failed to set baud rate to %u\n", baud);
@@ -1615,7 +1624,7 @@ static int cp210x_port_probe(struct usb_serial_port *port)
 	struct usb_serial *serial = port->serial;
 	struct cp210x_port_private *port_priv;
 	int ret;
-
+    printk("cp210x_port_probe");
 	port_priv = kzalloc(sizeof(*port_priv), GFP_KERNEL);
 	if (!port_priv)
 		return -ENOMEM;
