@@ -1,0 +1,7 @@
+
+udevadm info --attribute-walk --name=/dev/ttyUSB0 |grep KERNELS
+
+ATTRS{idProduct}=="ea88", ATTRS{idVendor}=="10c4", KERNELS=="1-2", SYMLINK+="lidar", MODE="0777"
+sudo udevadm control --reload-rules && sudo service udev restart && sudo udevadm trigger
+
+https://zhuanlan.zhihu.com/p/56552062
