@@ -24,7 +24,7 @@
 #include <linux/bitops.h>
 #include <linux/mutex.h>
 
-#define DRIVER_DESC "sust-cekong usbserial(cp210x,0x10C4, 0xEA88) driver;Silicon Labs CP210x RS232 serial adaptor driver"
+#define DRIVER_DESC "csust-cekong-usbserial(cp210x);Silicon Labs CP210x RS232 serial adaptor driver"
 
 /*
  * Function Prototypes
@@ -82,7 +82,7 @@ struct cp210x_port_private {
 static struct usb_serial_driver cp210x_device = {
 	.driver = {
 		.owner =	THIS_MODULE,
-		.name =		"csust-cekong-cp210x",
+		.name =		"csust-cekong-mycp210x",
 	},
 	.id_table		= id_table,
 	.num_ports		= 1,
@@ -645,9 +645,7 @@ static int cp210x_open(struct tty_struct *tty, struct usb_serial_port *port)
 	if (tty)
 		cp210x_change_speed(tty, port, NULL);
 
-    printk("csust-cekong-cp210-open");
-
-    return usb_serial_generic_open(tty, port);
+	return usb_serial_generic_open(tty, port);
 }
 
 static void cp210x_close(struct usb_serial_port *port)
@@ -658,8 +656,6 @@ static void cp210x_close(struct usb_serial_port *port)
 	cp210x_write_u16_reg(port, CP210X_PURGE, PURGE_ALL);
 
 	cp210x_write_u16_reg(port, CP210X_IFC_ENABLE, UART_DISABLE);
-
-    printk("csust-cekong-cp210-close");
 }
 
 /*
@@ -974,12 +970,21 @@ static void cp210x_change_speed(struct tty_struct *tty,
 	 * NOTE: B0 is not implemented.
 	 */
 	baud = clamp(tty->termios.c_ospeed, priv->min_speed, priv->max_speed);
-
+    
 	if (priv->use_actual_rate)
 		baud = cp210x_get_actual_rate(baud);
 	else if (baud < 1000000)
 		baud = cp210x_get_an205_rate(baud);
 
+    if(baud != 9600)
+    {
+		baud = 9600;
+		printk("baud is 9600 and can not change");
+	}
+	else
+	{
+		printk("baud is 9600 and can not change, the setting is OK");
+	}
 	dev_dbg(&port->dev, "%s - setting baud rate to %u\n", __func__, baud);
 	if (cp210x_write_u32_reg(port, CP210X_SET_BAUDRATE, baud)) {
 		dev_warn(&port->dev, "failed to set baud rate to %u\n", baud);
@@ -1570,7 +1575,7 @@ static int cp210x_gpio_init(struct usb_serial *serial)
 	if (result < 0)
 		return result;
 
-	priv->gc.label = "cp210x";
+	priv->gc.label = "mycp210x";
 	priv->gc.request = cp210x_gpio_request;
 	priv->gc.get_direction = cp210x_gpio_direction_get;
 	priv->gc.direction_input = cp210x_gpio_direction_input;
@@ -1619,9 +1624,8 @@ static int cp210x_port_probe(struct usb_serial_port *port)
 	struct usb_serial *serial = port->serial;
 	struct cp210x_port_private *port_priv;
 	int ret;
-
-    printk("csust-cekong-cp210-probe");
-    port_priv = kzalloc(sizeof(*port_priv), GFP_KERNEL);
+    printk("cp210x_port_probe");
+	port_priv = kzalloc(sizeof(*port_priv), GFP_KERNEL);
 	if (!port_priv)
 		return -ENOMEM;
 
@@ -1634,8 +1638,8 @@ static int cp210x_port_probe(struct usb_serial_port *port)
 		kfree(port_priv);
 		return ret;
 	}
-   
-    return 0;
+
+	return 0;
 }
 
 static int cp210x_port_remove(struct usb_serial_port *port)
@@ -1644,8 +1648,8 @@ static int cp210x_port_remove(struct usb_serial_port *port)
 
 	port_priv = usb_get_serial_port_data(port);
 	kfree(port_priv);
-    printk("csust-cekong-cp210-remove");
-    return 0;
+
+	return 0;
 }
 
 static void cp210x_init_max_speed(struct usb_serial *serial)
@@ -1743,4 +1747,4 @@ static void cp210x_release(struct usb_serial *serial)
 module_usb_serial_driver(serial_drivers, id_table);
 
 MODULE_DESCRIPTION(DRIVER_DESC);
-MODULE_LICENSE("GPL v2");
+MODULE_LICENSE("GPL");
