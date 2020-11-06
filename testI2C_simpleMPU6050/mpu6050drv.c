@@ -141,7 +141,7 @@ static ssize_t mpu6050_read(struct file *file, char __user *buf, size_t size, lo
 
 static ssize_t mpu6050_write(struct file *file, const char __user *buf, size_t size, loff_t *offset)
 {
-    printK("mpu6050_write and IOCTRL,Please DIY ");
+    printk("mpu6050_write and IOCTRL,Please DIY ");
     return 0;
 }
 
@@ -178,7 +178,6 @@ static ssize_t mpu6050_write(struct file *file, const char __user *buf, size_t s
 //     class_destroy(cls);
 //     return 0;
 // }
-
 //这个mpu6050drv_probe，注册为混杂设备，简单就好.
 //无论混杂还是字符设备都是面对用户用于操控设备的接口。
 //也就是让用户看到在/dev/下看到mpu6050的设备，并用open,close，read,write进行操作
@@ -193,7 +192,7 @@ static struct miscdevice misc = {
 
 static int mpu6050drv_probe(struct i2c_client *i2c_client, const struct i2c_device_id *i2c_device_id)
 {
-    dev_t dev = 0;
+   
     printk("mpu6050drv_probe\r\n");
     misc_register(&misc); //注册主设备号为10的特殊字符设备  
     printk("mpu6050_misc_init\n");
