@@ -6,7 +6,7 @@
 #include <linux/regmap.h>
 #include <linux/slab.h>
 
-static const unsigned short addr_list[] = {0x50, 0x68, I2C_CLIENT_END};
+static const unsigned short addr_list[] = {0x68, I2C_CLIENT_END};
 static struct i2c_board_info mpu6050_info = {
     .type = "mpu6050",
 };

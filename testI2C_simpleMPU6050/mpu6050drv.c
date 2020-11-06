@@ -89,7 +89,8 @@ static ssize_t mpu6050_read(struct file *file, char __user *buf, size_t size, lo
 
     struct i2c_client *i2c_client = g_client; //全局指针
     struct MPU6050_data mpudata;              //分配内核缓冲区
-    //
+    
+     printk("mpu6050_read\n");
     ///////读X
     high = i2c_smbus_read_byte_data(i2c_client, MPU6050_REG_GYRO_X);
     low = i2c_smbus_read_byte_data(i2c_client, MPU6050_REG_GYRO_X+1);
@@ -142,14 +143,15 @@ static ssize_t mpu6050_read(struct file *file, char __user *buf, size_t size, lo
     //mpudata.accZ = accTmp / 16384.0;    // dividing 16384 ,user do it
     mpudata.accZ = accTmp; 
 
-
+    printk("%d,%d,%d,%d,%d,%d\n",mpudata.gyroX,mpudata.gyroY,mpudata.gyroZ,mpudata.accX,mpudata.accY,mpudata.accZ);
     copy_to_user((struct MPU6050_data *)buf, &mpudata, sizeof(mpudata));
+     printk("mpu6050_read,%d\n\n",sizeof(mpudata));
     return sizeof(mpudata);
 }
 
 static ssize_t mpu6050_write(struct file *file, const char __user *buf, size_t size, loff_t *offset)
 {
-    printk("mpu6050_write and IOCTRL,Please DIY ");
+    printk("mpu6050_write and IOCTRL,Please DIY\n ");
     return 0;
 }
 
@@ -208,8 +210,9 @@ static int mpu6050drv_probe(struct i2c_client *i2c_client, const struct i2c_devi
     u16 version;
     i2c_smbus_write_byte_data(i2c_client, MPU6050_REG_PWR_MGMT_1, 0);
     version = i2c_smbus_read_byte_data(i2c_client, MPU6050_REG_WHO_AM_I);
-    printk(" mpu6050_hw_init,%d", version);
+    printk(" mpu6050_hw_init,version %d\n", version);
     g_client = i2c_client; //全局指针
+    printk(" mpu6050_probe end");
     return 0;
 }
 static int mpu6050drv_remove(struct i2c_client *i2c_client)
