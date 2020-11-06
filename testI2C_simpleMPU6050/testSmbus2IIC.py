@@ -1,50 +1,81 @@
-#just for GY210 MPU6050 
-
+#!/usr/bin/python
+#https: // blog.csdn.net/he__yuan/article/details/76559569
+#https://blog.csdn.net/mechleechan/article/details/79384618
+#https: // www.basemu.com/reading-data-from-the-mpu-6050-on-the-raspberry-pi-for-python.html 重要
 import smbus
-import time
- 
+import math
 
-bus = smbus.SMBus(1)
-
-#EVICE_ADDRESS = 0x03;  #direct copy from i2cdetect   #7 bit address (will be left shifted to add the read write bit)
-#set TOF101020 address 
-# SET_ADDR_REG = 0x0f;
-# ADDR_VAL = 0x0e<<1;#0x06 #7 bit address (will be left shifted to add the read write bit
-# bus.write_byte_data(DEVICE_ADDRESS, SET_ADDR_REG, ADDR_VAL)
-# time.sleep(0.1)
-
-DEVICE_ADDRESS = 0x0e;
-#set TOF101020 I2C or UART mode address 
-# DEVICE_ADDRESS2 = DEVICE_ADDRESS;
-# I2CUART_REG = 0x09;
-# I2C_MODE= 0x01 
-# UART_MODE = 0x00;
-# bus.write_byte_data(DEVICE_ADDRESS2,I2CUART_REG,UART_MODE)
-# time.sleep(0.1)
-
-# MODE = bus.read_byte_data(DEVICE_ADDRESS2,I2CUART_REG)
-# print(MODE)
-# time.sleep(0.1)
-
-#get TOF101020 address 
-# DEVICE_ADDRESS = 0x0e;
-# GET_ADDR_REG = 0x0f;
-# addrVal = bus.read_byte_data(DEVICE_ADDRESS, GET_ADDR_REG)
-# print(addrVal)
-# time.sleep(0.1)
+# Power management registers
+power_mgmt_1 = 0x6b
+power_mgmt_2 = 0x6c
 
 
-GET_DIST_REG1 = 0x00;
-distVal1 = bus.read_byte_data(DEVICE_ADDRESS, GET_DIST_REG1)
-print(distVal1)
-time.sleep(0.1)
-
-#read data
-# GET_DISTMODE_REG = 0x08;
-# distMode = bus.read_byte_data(DEVICE_ADDRESS, GET_DISTMODE_REG)
-# time.sleep(0.1)
-# print(distMode)
+def read_byte(adr):
+    return bus.read_byte_data(address, adr)
 
 
+def read_word(adr):
+    high = bus.read_byte_data(address, adr)
+    low = bus.read_byte_data(address, adr+1)
+    val = (high << 8) + low
+    return val
 
 
+def read_word_2c(adr):
+    val = read_word(adr)
+    if (val >= 0x8000):
+        return -((65535 - val) + 1)
+    else:
+        return val
+
+
+def dist(a, b):
+    return math.sqrt((a*a)+(b*b))
+
+
+def get_y_rotation(x, y, z):
+    radians = math.atan2(x, dist(y, z))
+    return -math.degrees(radians)
+
+
+def get_x_rotation(x, y, z):
+    radians = math.atan2(y, dist(x, z))
+    return math.degrees(radians)
+
+
+bus = smbus.SMBus(1)  # or bus = smbus.SMBus(1) for Revision 2 boards
+address = 0x68       # This is the address value read via the i2cdetect command
+
+# Now wake the 6050 up as it starts in sleep mode
+bus.write_byte_data(address, power_mgmt_1, 0)
+
+print("gyro data")
+print("---------")
+
+gyro_xout = read_word_2c(0x43)
+gyro_yout = read_word_2c(0x45)
+gyro_zout = read_word_2c(0x47)
+
+print( "gyro_xout: ", gyro_xout, " scaled: ", (gyro_xout / 131))
+print( "gyro_yout: ", gyro_yout, " scaled: ", (gyro_yout / 131))
+print("gyro_zout: ", gyro_zout, " scaled: ", (gyro_zout / 131))
+
+
+print("accelerometer data")
+print("---------")
+
+
+accel_xout = read_word_2c(0x3b)
+accel_yout = read_word_2c(0x3d)
+accel_zout = read_word_2c(0x3f)
+
+accel_xout_scaled = accel_xout / 16384.0
+accel_yout_scaled = accel_yout / 16384.0
+accel_zout_scaled = accel_zout / 16384.0
+
+print("accel_xout: ", accel_xout, " scaled: ", accel_xout_scaled)
+print("accel_yout: ", accel_yout, " scaled: ", accel_yout_scaled)
+print("accel_zout: ", accel_zout, " scaled: ", accel_zout_scaled)
+
+print( "x rotation: ", get_x_rotation(accel_xout_scaled, accel_yout_scaled, accel_zout_scaled))
+print("y rotation: ", get_y_rotation(accel_xout_scaled, accel_yout_scaled, accel_zout_scaled))
