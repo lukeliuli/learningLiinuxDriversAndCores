@@ -1,7 +1,7 @@
 #!/usr/bin/python
 #https: // blog.csdn.net/he__yuan/article/details/76559569
 #https://blog.csdn.net/mechleechan/article/details/79384618
-#https: // www.basemu.com/reading-data-from-the-mpu-6050-on-the-raspberry-pi-for-python.html 重要
+#important: https: // www.basemu.com/reading-data-from-the-mpu-6050-on-the-raspberry-pi-for-python.html 
 import smbus
 import math
 
