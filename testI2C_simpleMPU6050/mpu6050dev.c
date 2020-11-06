@@ -15,7 +15,7 @@ static struct i2c_client *mpu6050_client;
 static int mpu6050dev_init(void)
 {
     struct i2c_adapter *i2c_adap;
-    i2c_adap = i2c_get_adapter(0);
+    i2c_adap = i2c_get_adapter(1);
     mpu6050_client = i2c_new_probed_device(i2c_adap, &mpu6050_info, addr_list, NULL);
     i2c_put_adapter(i2c_adap);
 

@@ -89,7 +89,7 @@ static ssize_t mpu6050_read(struct file *file, char __user *buf, size_t size, lo
 
     struct i2c_client *i2c_client = g_client; //全局指针
     struct MPU6050_data mpudata;              //分配内核缓冲区
-
+    //
     ///////读X
     high = i2c_smbus_read_byte_data(i2c_client, MPU6050_REG_GYRO_X);
     low = i2c_smbus_read_byte_data(i2c_client, MPU6050_REG_GYRO_X+1);
@@ -97,8 +97,9 @@ static ssize_t mpu6050_read(struct file *file, char __user *buf, size_t size, lo
 
     if (gyroTmp >= 0x8000)
         gyroTmp = -((65535 - gyroTmp) + 1);
-    mpudata.gyroX = gyroTmp / 131;
-
+    //mpudata.gyroX = gyroTmp / 131;
+    mpudata.gyroX = gyroTmp;// dividing 131 ,user do it
+    
     ///////读Y
     high = i2c_smbus_read_byte_data(i2c_client, MPU6050_REG_GYRO_Y);
     low = i2c_smbus_read_byte_data(i2c_client, MPU6050_REG_GYRO_Y + 1);
@@ -106,7 +107,8 @@ static ssize_t mpu6050_read(struct file *file, char __user *buf, size_t size, lo
 
     if (gyroTmp >= 0x8000)
         gyroTmp = -((65535 - gyroTmp) + 1);
-    mpudata.gyroY = gyroTmp / 131;
+    //mpudata.gyroY = gyroTmp / 131;// dividing 131 ,user do it
+    mpudata.gyroY = gyroTmp; 
 
     ///////读Z
     high = i2c_smbus_read_byte_data(i2c_client, MPU6050_REG_GYRO_Z);
@@ -115,25 +117,31 @@ static ssize_t mpu6050_read(struct file *file, char __user *buf, size_t size, lo
 
     if (gyroTmp >= 0x8000)
         gyroTmp = -((65535 - gyroTmp) + 1);
-    mpudata.gyroY = gyroTmp / 131;
+    //mpudata.gyroY = gyroTmp / 131;// dividing 131 ,user do it
+        mpudata.gyroZ= gyroTmp; 
 
     //读ACC_X
     high = i2c_smbus_read_byte_data(i2c_client, MPU6050_REG_ACC_X);
     low = i2c_smbus_read_byte_data(i2c_client, MPU6050_REG_ACC_X + 1);
     accTmp = (high << 8) + low;
-    mpudata.accX = accTmp / 16384.0;
+    //mpudata.accX = accTmp / 16384.0;// dividing 16384 ,user do it
+    mpudata.accX = accTmp;
 
     //读ACC_Y
     high = i2c_smbus_read_byte_data(i2c_client, MPU6050_REG_ACC_Y);
     low = i2c_smbus_read_byte_data(i2c_client, MPU6050_REG_ACC_Y + 1);
     accTmp = (high << 8) + low;
-    mpudata.accY = accTmp / 16384.0;
+    //mpudata.accY = accTmp / 16384.0; // dividing 16384 ,user do it
+    mpudata.accY = accTmp; 
+
 
     //读ACC_Z
     high = i2c_smbus_read_byte_data(i2c_client, MPU6050_REG_ACC_Z);
     low = i2c_smbus_read_byte_data(i2c_client, MPU6050_REG_ACC_Z + 1);
     accTmp = (high << 8) + low;
-    mpudata.accZ = accTmp / 16384.0;
+    //mpudata.accZ = accTmp / 16384.0;    // dividing 16384 ,user do it
+    mpudata.accZ = accTmp; 
+
 
     copy_to_user((struct MPU6050_data *)buf, &mpudata, sizeof(mpudata));
     return sizeof(mpudata);

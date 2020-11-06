@@ -1,4 +1,4 @@
-obj-m :=mpu6050drv.o
+obj-m :=mpu6050drv.o mpu6050dev.o
 KDIR := /home/pi/codes/kernel/linux
 PWD := $(shell pwd)
 all:
