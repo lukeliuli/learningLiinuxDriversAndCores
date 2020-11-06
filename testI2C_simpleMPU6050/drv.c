@@ -136,6 +136,7 @@ static ssize_t mpu6050_read(struct file *file, char __user *buf, size_t size, lo
     mpudata.accZ = accTmp / 16384.0;
 
     copy_to_user((struct MPU6050_data *)buf, &mpudata, sizeof(mpudata));
+    return sizeof(mpudata);
 }
 
 static ssize_t mpu6050_write(struct file *file, const char __user *buf, size_t size, loff_t *offset)
