@@ -110,19 +110,36 @@ static int __init pi_led_init(void)
 {
    struct device *dev;
    int major; //自动分配主设备号
-   major = alloc_chrdev_region(&pi_led_devno, 0, 1, DRIVER_NAME);
+   int rvl;
+   int ma;
+   int mi;
+   rvl = alloc_chrdev_region(&pi_led_devno, 0, 1, DRIVER_NAME);
    //register_chrdev 注册字符设备使系统知道有LED这个模块在.
 
+   ma = MAJOR(pi_led_devno);    //主设备号
+   mi = MINOR(pi_led_devno);    //次设备号
+    printk("%d,%d\n", ma,mi);
+
+   //mknod /dev/pi_Led c 236 0
+   //rm -rf /dev/pi_Led
+   
    cdev_init(&pi_led_class_dev, &pi_led_dev_fops);
    major = cdev_add(&pi_led_class_dev, pi_led_devno, 1);
    //注册class
+   //echo /sbin/mdev > /proc/sys/kernel/hotplug
    pi_led_class = class_create(THIS_MODULE, DRIVER_NAME);
 
+    if(IS_ERR(pi_led_class)) 
+     {
+          printk("Err: failed in creating class.\n");
+          return -1; 
+      }
    dev = device_create(pi_led_class, NULL, pi_led_devno, NULL, DRIVER_NAME);
 
 
 
    printk("pi led init ok!\n");
+   printk("%d,%d\n", ma,mi);
    return 0;
 }
 //内核卸载后的销毁函数.

@@ -2,7 +2,6 @@
 
 	
 obj-m :=led.o
-KDIR := /home/pi/codes/kernel/linux
 
 #For pi ARM
 #KDIR := /home/pi/codes/kernel/linux
