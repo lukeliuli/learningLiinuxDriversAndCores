@@ -15,3 +15,9 @@
 注意 
 1. testRead.py是基于python的测试驱动read是否可以 
 2. 程序都是在树莓派3b+运行的。如果在虚拟机linux运行,参考testHello1里面的linuxMakefile 
+
+
+
+# 编译内核
+0. 向一个SD卡中烧写系统并准备好所有键盘鼠标和显示屏，并运行成功.  参考：https://www.raspberrypi.com/software/. 这一步骤老师已经准备好了。
+1. 根据实验报告和实验提示编译内核
