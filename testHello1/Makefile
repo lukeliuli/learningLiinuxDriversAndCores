@@ -1,11 +1,13 @@
 obj-m :=hello.o
 #For pi ARM
-KDIR := /home/liuli/linux
+KDIR := /home/pi/linux
 #For linux X86
 #KDIR := /lib/modules/$(shell uname -r)/build
 PWD := $(shell pwd)
 all:
-	make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -C $(KDIR) M=$(PWD) modules 
+	make -C $(KDIR) M=$(PWD) modules
 clean:
 	rm -rf *.o *~ core .depend *.cmd *.ko *.mod.c *.mod .tmp_versions *.markers *.order *.symvers
+
+
 
