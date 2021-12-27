@@ -1,6 +1,6 @@
 # learningLiinuxDriversAndCores
 1. helloworld1：gcc生成可执行文件
-2. testCharLed1：最简单的字符驱动 
+2. testCharDevNull1：最简单的字符驱动。testCharLed1：最简单的字符驱动，加入GPIO电路LED灯，硬件配置只适合树莓派3B
 3. testHello1：最简单的驱动
 4. testPlatformDriver1：最简单的platform驱动
 5. testMiscDriver1:最简单的混杂驱动
