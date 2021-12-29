@@ -27,4 +27,4 @@
 103. sudo adduser cekong01 ; sudo usermod -aG sudo cekong01 
 104. git clone  --depth=1 -b 1.20211029 https://github.com/raspberrypi/linux.git #获得版本为5.10.63-v7+的树莓派内核源代码
 
-105. 
+105. sudo apt install raspberrypi-kernel-headers=1.20211029;sudo sync
