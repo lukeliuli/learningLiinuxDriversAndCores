@@ -25,5 +25,6 @@
 101. 现有树莓派3B，通过升级已经支持U盘启动。4b 没有成功 https://blog.csdn.net/qq_38685043/article/details/119650171  
 102. 注意驱动编译时，make文件要修改内核源代码
 103. sudo adduser cekong01 ; sudo usermod -aG sudo cekong01 
-104. 
+104. git clone  --depth=1 -b 1.20211029 https://github.com/raspberrypi/linux.git #获得版本为5.10.63-v7+的树莓派内核源代码
+
 105. 
