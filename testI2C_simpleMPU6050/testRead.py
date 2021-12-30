@@ -1,10 +1,20 @@
-#!/usr/bin/python
-# -*- coding: UTF-8 -*-
-
 import struct
-fh = open("/dev/mpu6050", "r")
-data = fh.read(24)
-data2 = struct.unpack("iiiiii", data)
-print(data2)
+fh = open("/dev/mpu6050", mode='rb')
+data = fh.read(12)
+print(data)
+print(data[0])
+print(data[1])
+print(data[2])
+print(data[3])
+print(data[4])
+print(data[5])
+print(data[6])
+print(data[7])
+print(data[8])
+print(data[9])
+print(data[10])
+print(data[11])
+#data2 = struct.unpack("iiiiii", data)
+#print(data2)
 # 关闭打开的文件
 fh.close()
