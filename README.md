@@ -4,7 +4,7 @@
 3. testHello1：最简单的驱动
 4. testPlatformDriver1：最简单的platform驱动
 5. testMiscDriver1:最简单的混杂驱动
-6. testI2C_simpleMPU6050:最简单的MPU6050驱动,包括python smbus直接读取I2C的程序
+6. testI2C_simpleMPU6050:最简单的MPU6050驱动,包括python smbus直接读取I2C的程序。必须先insmod mpu6050drv.ko 然后insmod mpu6050dev.ko
 7. testCP210x: 简单的usbserial驱动。通过修改usb的ID。从cp210x.c修改（几乎没有改）
 －－
 
