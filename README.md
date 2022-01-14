@@ -36,7 +36,7 @@
 3. 用winrar或者7z，获得镜像中的bcm2710-rpi-3-b.dtb,以及kernel7.img
 4. 采用qemuRaspi中的raspWin10里面的命令行(linux也一样进行运行)
 
-注意
+注意  
 1.可以采用-nographic进行运行，但是不建议使用  
 2. 默认命令中有使用USB+ISO进行文件在主机给虚拟机之间进行文件传输  
 3.如何用monitor进行USB设备的动态加载，用界面方式最快。这里用ISO制作文件(用ultraISO文件进行编辑比较简单)，并采用界面monitor进行文件的动态加载 基本命令如下  
@@ -44,8 +44,8 @@ drive_add 0 id=d1, if=none,format=raw,media=cdrom,file=./myData.iso
 device_add usb-storage,id=d1,drive=d1  
 device_del d1  
 4. SD卡扩容、格式化、并加入了文件系统如下  
-# qemu resize  
-# fdisk ,见https://wenku.baidu.com/view/e373afd0e45c3b3567ec8bb3.html  
-# sudo resize2fs /dev/mmcblk0p2  
+4.1 qemu resize  
+4.2 fdisk ,见https://wenku.baidu.com/view/e373afd0e45c3b3567ec8bb3.html  
+4.3 sudo resize2fs /dev/mmcblk0p2  
 5. 很多细节屏蔽，例如ARM平台下的网络设备现阶段只能用usb-net  
 6. 整个系统已经在我给出的云主机实现，用户名和密码一样  
