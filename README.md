@@ -47,5 +47,5 @@ device_del d1
 4.1 qemu resize  
 4.2 fdisk ,见https://wenku.baidu.com/view/e373afd0e45c3b3567ec8bb3.html  
 4.3 sudo resize2fs /dev/mmcblk0p2  
-5. 很多细节屏蔽，例如ARM平台下的网络设备现阶段只能用usb-net  
+5. 很多细节屏蔽，例如ARM平台下的网络设备现阶段只能用usb-net。例如树莓派3b的qemu的核是kernel8.img而不是kernel7.img(kernel7.img无法启动)
 6. 整个系统已经在我给出的云主机实现，用户名和密码一样  
