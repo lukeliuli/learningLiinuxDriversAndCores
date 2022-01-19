@@ -1,0 +1,12 @@
+obj-m :=hello.o
+#For pi ARM
+#KDIR := /home/liuli/linux
+#For linux X86
+KDIR := /lib/modules/$(shell uname -r)/build
+PWD := $(shell pwd)
+all:
+	make -C $(KDIR) M=$(PWD) modules
+clean:
+	rm -rf *.o *~ core .depend *.cmd *.ko *.mod.c *.mod .tmp_versions *.markers *.order *.symvers
+
+#如果出现没有hello设备，根据主设备和次设备好，用mknod 命令进行设备创建，例如mknod pi_led c 244 0
