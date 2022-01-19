@@ -9,4 +9,5 @@ all:
 clean:
 	rm -rf *.o *~ core .depend *.cmd *.ko *.mod.c *.mod .tmp_versions *.markers *.order *.symvers
 
-#如果出现没有hello设备，根据主设备和次设备好，用mknod 命令进行设备创建，例如mknod pi_led c 244 0
+#如果出现没有hello设备，根据主设备和次设备好，用mknod 命令进行设备创建，例如mknod /dev/pi_led c 244 0
+#先不上真树莓派，直接用linux虚拟机或者云端linux-X86虚拟机
