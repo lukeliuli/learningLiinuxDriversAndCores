@@ -1,4 +1,5 @@
-# learningLiinuxDriversAndCores
+# learningLinuxDriversAndCores 注意代码已经转移到gitee上面    
+
 1. helloworld1：gcc生成可执行文件
 2. testCharDevNull1：最简单的字符驱动。testCharLed1：最简单的字符驱动，加入GPIO电路LED灯，硬件配置只适合树莓派3B
 3. testHello1：最简单的驱动
